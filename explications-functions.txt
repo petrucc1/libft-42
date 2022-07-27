@@ -1,0 +1,295 @@
+EXPLICAÇÕES PARA AS FUNÇÕES DA LIBFT
+
+ATOI
+
+Converte string em números inteiros, é uma forma de escrever ASCII para um número inteiro que esteja entre o MIN_INT e o MAX_INT (-2147483647 até 2147483647).
+
+Na linha 15 - 23: a primeira parte verifica se há espaços ou tabulações na string, onde coloquei direto o return para ocorrer a verificação direta e não ser necessário o retorno de true ou false.
+É equivalente a colocar um if e return (1) - return(0), a validação ocorrerá quando a função for chamada;
+
+Na linha 25 - 31: eu tenho um ponteiro de char que recebe uma string qualquer, declaro duas variáveis, a variável result para trazer a resposta final e a variável signal que verifica se o dígito é negativo ou positivo, ou seja, é um validador;
+
+Na linha 32: o while garante que enquanto houver espaços ou tabulações, eu vou seguir adiante, ele vai simplesmente pular esses espaços e tabulações;
+
+Na linha 34: inicia um laço de repetição para verificar se o valor é positivo ou negativo, se for negativo, eu colocarei como "1", que é igual a true e realizo a incrementação para passar  para a próxima posição da string;
+
+Na linha 40: verifica se é um valor positivo e, se sim, ele passa adiante;
+
+Na linha 42: o while garante que enquanto for dígito (enquanto o valor estiver entre "0" e "9");
+
+Na linha 43: eu vou pegar o valor da variável result que será multiplicado por 10 e reduzir 48. Por que 10? Porque eu vou carregar esse dígito para uma casa adiante para ficar registrado na variável. Por exemplo: multiplico 9 por 10 que resulta 90 e, com isso, irei para o próximo dígito. Toda vez que o laço for para o próximo dígito, eu vou multiplicar por 10 e vou carregando esse dígito na variável. No caso do MAX_INT, o que inicialmente é 20, virará 210 e assim por diante. Sempre haverá um dígito 0 na última posição.
+
+E por que 48? Porque na tabela ASCII, o número 48 é igual ao dígito 0 que será o valor inteiro desse número. Para exemplo: colocar "ascii" no terminal, irá abrir a tabela e procurar o dígito "9" que é igual 57 e, 57 - 48 na tabela ASCII é igual a 9. Esta é uma operação específica para a linguagem C, é assim que a tabela ASCII se comporta.
+*nptr++ - 48 é a mesma coisa que deixar o *nptr - 48 e depois incrementar o nptr++, neste caso é preciso saber mais sobre aritmética de ponteiro.
+
+Na linha 44: se o número for negativo, se for 1, se foi validado como true, eu vou multiplicar por -1 para converter o número em negativo no momento de retornar a função;
+
+BZERO
+
+Transforma um número n de bytes de uma string em 0, preenche toda a memória em "0". Por exemplo: recebemos a palavra "uva" e a função irá converter cada letra em 0, ou seja "000". E para função não interessa o tipo da variável que foi passada, pode ser int, char ou size_t, ele simplesmente vai fazer a conversão;
+
+CALLOC
+
+Esta função pede alocação de memória com o malloc para que possa preencher essa memória com zeros (0).
+
+Na linha 21: largeness (tamanho total do array) vai receber o valor de nmemb (o número de elementos dentro do array) multiplicado pelo valor de size (o tamanho de cada elemento).
+
+Na linha 23: eu aloco a memória necessária para guardar o valor de largeness em index (posição do array).
+
+Na linha 24 - 25: é realizada uma validação que, se não for possível alocar memória, se não houver memória suficiente ou o tamanho total do array for maior do que o INT_MAX, é retornado NULL.
+
+Na linha 26: caso contrário, será utilizado memset para pegar a string index e utilizar o fill, que irá preencher o array de zeros até alcançar o tamanho total guardado em largeness.
+
+Na linha 27: é retornado o ponteiro index preenchido por zeros;
+
+ISALNUM
+
+Esta função verifica se um caractere é alfanumérico.
+
+Na linha 17: o return já realiza a verificação diretamente para saber se o caractere é alfanumérico ou não, caso seja uma alfabético, já será retorando true e nem será necessário realizar a segunda operação;
+
+ISALPHA
+
+Esta função verifica se o caractere é alfabético.
+
+Na linha 17: o return já realiza a verificação diretamente para saber se o caractere é um alfabético maiusculo/minúsculo ou não, caso seja, é retornado true;
+
+ISASCII
+
+Esta é uma função testa se um determinado caractere, na localidade atual, pode ser representado como um caractere ASCII.
+
+Na linha 17: verifica se é um número entre 0 e 127 correspondente na tabela ASCII;
+
+ISDIGIT
+
+Esta função verifica se o caractere é numérico.
+
+Na linha 17: o return já realiza a verificação diretamente para saber se o caractere é um númerico, caso seja, é retornado true;
+
+ISPRINT
+
+Esta função verifica se um caractere é imprimível ou não, os caracteres que ocupam espaço de impressão são conhecidos como caracteres imprimíveis.
+
+ITOA
+
+Esta função converte um inteiro para uma string.
+
+Na linha 15 - 18: terei o ponteiro de string que será usado para alocar a variável num, um size_t size é o tamanho do buffer para poder alocar, um unsigned int num que eu estou tentando alocar e um unsigned int validador para verificar se o valor é negativo, ele é um booleano. Utilizaremos um inteiro num para converter para uma string str.
+
+Na linha 20: no último byte, no byte de posição size que, no caso, é a última posição, eu vou colocar um byte nulo ('\0') porque as strings no C terminam com byte nulo. 
+
+Na linha 21 - 24: faço um size-- para decrementar até chegar no início da string. enquanto eu tiver a posição num, eu vou colocar o módulo 10 para encontrar o último valor e vou somar com 48 para poder encontrar o valor inteiro em ASCII. Como eu tenho um inteiro, eu vou pegar o módulo desse valor, ou seja, o valor que restar do módulo de 10, por exeplo:
+vou procurar o módulo de 10 de 3421 que vai sobrar 01 e 01 + 48 vai retornar, simplesmente, o char desse dígito "1". Aloco tudo isso na posição atual (str[size), depois disso divido por 10 o que sobrou, ou seja, 3421 / 10 salva 342 (para entender melhor é necessário pesquisar e entender como funciona o módulo em C).
+
+Na linha 26: se for negativo, será adicionado um sinal negativo no começo "-" e a string está feita e guardada em str.
+
+Na linha 31 - 44: como um número inteiro, mesmo que contendo mais de um dígito, é considerado um só elemento e não individual como em uma string, eu vou dividindo por 10 para obter o número de vezes que este valor pode ser dividido por 10, encontrando assim o tamanho. O len = 1 serve para garantir que qualquer valor (de 0 a 9) passado começará com, no mínimo, tamanho 1. É verificado se o num é menor que 0, onde já será somado o valor porque eu vou ter um valor negativo que foi passado, ou seja, vai ser aquele tamanho + 1 por ter um número negativo, se eu tenho um número negativo, ele já é um dos tamanhos.
+
+Se eu quero converter um número inteiro em uma string, eu preciso que um dos valores da string seja calculado como uma casa, cada valor da string é uma casa (índice), então eu preciso alocar espaço em memória para poder colocar nesta string e o valor negativo é um espaço também, é por isso que é necessário colocar + 1 na casa no espaço.
+Divido o número por 10 desde o início para poder continuar calculando no while porque o 1 é colocado desde o começo para que qualquer valor passado tenha o tamanho um, qualquer valor de 0 a 9.
+
+No while, o restante é dividido por 10 até não ser mais possível, enquanto for possível dividir, o while retornará true e quando a divisão chegar a 0, com isso consigo pegar o tamanho de um num e guardar em len.   
+
+Na linha 47 - 51: é definido n_digits para pegar um tamanho, is_negative para verificar se é um número negativo e um ponteiro str para capturar a string
+
+Na linha 53: n_digits guarda o número de dígitos que serão precisos na função que são extraídos da função ft_numlen (retornar nela para explicar, se for necessário).
+
+Na linha 54: is_negative, por enquanto, é false.
+
+Na linha 55 - 58: se o dígito n for menor que 0, ele é um valor negativo, mas eu só quero se for positivo, então, se ele for negativo, eu vou transformar ele em positivo.
+
+Na linha 60: eu faço alocação de memória dinâmica do tamanho que vou precisar para poder ter um ponteiro de str para colocar esse valor lá dentro para devolver pro escopo que estiver chamando essa função, faço o sizeof de n_digits mais 1 e esse mais 1 é o espaço para guardar o dígito nulo, o byte nulo. Então preciso ter o tamanho daquele elemento de inteiros (n_digits) mais 1 para poder alocar um byte nulo para dentro de uma string, onde será entendido que a string chegou ao final.
+
+Na linha 61 - 62: se eu não conseguir alocar memória, é retornado NULL.
+
+Na linha 63: se for possível a alocação de memória, a converção ocorre (ir até a função correspondente para TENTAR entender como funciona);
+
+MEMCHR
+
+Esta função escaneia uma string até encontrar um caractere.
+S é um ponteiro para a porção inicial de memória, ou seja, uma string;
+C é o caractere a ser encontrado;
+Buffer size é o tamanho da busca.
+
+Na linha 19 - 24: nesse while, eu estou fazendo a atribuição de s em str, faço a verificação se o caractere passado foi encontrado no valor de str (se forem valores correspondentes) e, se sim, é retornado o valor original e, se não for encontrado, é incrementado no s para continuar correndo a string;
+
+MEMCMP
+
+Esta função compara o array s1 e s2 até n bytes, passa byte por byte até ter a certeza de que um é igual ao outro.
+
+Na linha 17 - 23: se a s1 é maior que a s2 naquele byte, 
+
+Na linha 24 - 30: enquanto meu interador (i) for menor do que n, o laço de repetição é realizado, onde é realizada a comparação e se é passado do número de bytes de comparação, o loop é encerrado e é retornado 0.
+Na comparação, se s1 é diferente de s2, é retornada a diferença entre eles.
+
+Eu verifico se os dois arrays são iguais, a função é rodada e é retornado 0 porque os arrays conseguiram passar e foram aprovados em questão de comparação.
+Se s1 for maior do que s2, é retornado um valor positivo, mas se s1 for menor do que s2, é retornado um valor negativo. Isso acontece quando é comparada as strings por completo.
+
+MEMCPY
+
+Esta função copia n bytes de memória de uma área original até uma área de destino, eu pegarei um ponteiro que está na área original e passarei uma cópia desse conteúdo para a área de destino.
+
+Na linha 17 - 18: são criados dois ponteiros auxiliares.
+
+Na linha 20 - 21: é verificado se a origem e o destino são nulos, para saber se eles permitem a transição de memória. Se qualquer um for NULL, é retornado o dest da forma que veio e não é realizada nenhuma alteração.
+
+Na linha 22 - 23: passo src e dest para os ponteiros auxiliares porque eles estão vindo como void e quero um char definido, quero que ambos tenham um tipo e não que venha qualquer tipo de informação e, porque, possivelmente, será preciso copiar uma string.
+
+Na linha 24 - 26: faço com que o while rode por todo o tamanho do n. Por exemplo, se eu pedi que n tenha tamanho 3 e se src tem tamanho 7 e o dest tem tamanho 6, eu vou fazer com que o código rode até o tamanho que eu pedi no n.
+Depois atribuo à *d o valor que foi, anteriormente, atribuído à *s (para entender melhor, é preciso mais conhecimento sobre aritmética de ponteiro), simplesmente passando o dado de um canto para o outro e, no final, eu retorno o ponteiro que recebeu essa informação. E eu retorno dest e não *d porque a função pede que seja retornado o void de ponteiro, poderia retornar *d se eu forçasse isso `return ((void *)d);` porque tanto o *d, quanto o dest são equivalentes em relação à valores, estão trabalhando na mesma àrea de memória;
+
+MEMMOVE
+
+Esta função copia informações de uma área de memória para outra utilizando ponteiros, tenho uma área de origem (src) e uma área de destino (dest), para onde será copiado o tamanho n de instruções.
+
+Na linha 17 - 21: são declaradas variáveis auxiliares para poder receber o valor como char.
+
+Na linha 22 - 26: se s for menor do que d, vou copiando essa informação enquanto estou interando e retorno a informação final.
+
+Na linha 28 - 29: senão, eu vou usar o memcpy (que foi explicado anteriormente), onde realizo a comparação entre um e outro e faço a atribuição direta. E, no fim, é retornado o valor atribuído no ponteiro dest.
+
+MEMSET
+
+Esta função preenche n bytes da memória apontados por s por uma constante c.
+
+Na linha 17 - 22: é criada uma variável auxiliar que é convertida em char de ponteiro, no while estou interando e vou fazendo a atribuição do valor de char (c) e passando para o próximo caractere. No fim, vai encher a memória com o valor de c e vai retornar o ponteiro da posição inicial (ver aritmética de ponteiro para saber mais).
+
+PUTCHAR
+
+Esta função escreve o caractere c no sistema.
+
+Na linha 17: eu quero escrever 1 byte de um caractere que eu passei como parâmetro (referência do char c = &c).
+
+PUTENDL
+
+Esta função escreve uma string *s no fd (filedescriptor) seguida de uma quebra de linha (\n).
+
+Na linha 17 - 18: escrevo uma string utilizando o ft_putstr_fd e termino com uma quebra de linha, conforme a função pede.
+
+PUTNBR
+
+Esta função escreve um inteiro n em um fd (filedescriptor), para fazer isso, é necessário converter o inteiro em char antes de escrever no fd (é preciso entender melhor sobre recursividade).
+
+Na linha 32: como eu tenho um valor que está entre 0 e 9 (se eu cheguei até a linha 28, é porque eu tenho um valor entre 0 e 9), portanto, é passado esse valor pela operação a seguir. Pego o valor que eu tenho e faço o módulo de 10 para garantir que é um valor inteiro e somo com 48 para obter o char conforme a tabela ASCII que é equivalente àquele valor para ser passado para o fd (filedescriptor). Qualquer valor númerico mais 48, vai dar o char daquele valor. 
+
+PUTSTR
+
+Na linha 17 - 20: enquanto eu estiver na string, eu escrevo informação por informação para o fd (filedescriptor). Eu estou pegando o valor que s aponta, enquanto este valor não for nulo, é realizada a escrita e, assim que for nulo, a função acaba.
+
+SPLIT
+
+Não me atrevo a explicar!
+
+STRCHR
+
+Esta função retorna um ponteiro para a primeira ocorrência de um char c na string.
+
+Na linha 17 - 18: se o caracter é maior do que 127, se é um caractere aleatório que está fora da tabela ASCII, vou dividir por 256 até cair na tabela ASCII.
+
+Na linha 19 - 23: enquanto estiver na string, se o valor da string, no qual estou no momento, é igual ao char (c) que eu estou buscando, é retornada a string nessa posição, senão incrementa.
+
+Na linha 25 - 27: se eu terminei a string e foi encontrado um byte nulo e se esse byte nulo é o que estava sendo procurado, retorna s que é o byte nulo, a última instrução e, se não for um byte nulo, retorna NULL (nulo) porque estou buscando uma coisa que não existe ali.
+
+STRDUP
+
+Esta função retorna um ponteiro para uma nova string que é duplicada da string s1.
+
+Na linha 17 - 21: é criado o ponteiro dest que é a duplicação da string passada como parâmetro, defino o tamanho desse char usando o ft_strlen + 1 para poder colocar o byte nulo, portanto, faço o malloc desse tamanho e garanto que o output desse malloc já tenha char de ponteiro.
+
+Na linha 22 - 24: se o malloc deu certo, farei a cópia da string de tamanho size utilizando a função ft_strlcpy, no caso, é retornado a cópia e não a string original.
+
+STRJOIN
+
+Esta função aloca utilizando o malloc e retorna uma string nova que é o resultado da concatenação da s1 com a s2.
+
+Na linha 17 - 22: se qualquer uma das strings recebidas for nula, é retornado nulo. Depois quero fazer a alocação de memória dinâmica que tem o tamanho da s1 mais o tamanho da s2 mais o tamanho do byte nulo e eu quero que seja para o tamanho de char.
+
+Na linha 23 - 25: se der errado a alocação de memória, é retornado NULL. Se der certo, vou guardar a primeira posição da string.
+
+Na linha 26 - 29: enquanto o valor da string existir e não for byte nulo, pego o valor da string e atribuo o valor de s1, estou realizando duas operações ao mesmo tempo (saber mais sobre aritmética de ponteiro). Quando eu chego no byte nulo, a primeira string é finalizada e eu passo para a próxima, onde ocorre a mesma situação.
+
+Na linha 30 - 31: quando eu chegar no byte nulo da segunda string, eu atribuo um byte nulo no final da string e no fim, é retornado a posição inicial.
+
+STRLCAT
+
+Esta função apenda a string original (src) para a string de destino (dest), é apendado o tamanho máximo da string menos o tamanho da string destino menos 1 byte. É retornado o tamanho total da string.
+
+Na linha 22 - 24: enquanto a minha string de destino e o tamanho definido é menor do que size, vou simplesmente interar em len até chegar no final da string. Quando eu tenho a posição do byte nulo, eu o declaro como i (interador).
+
+Na linha 25 - 28: então, na posição de byte nulo - interador e tamanho dessa string + 1, sendo menor que size (é apenas uma comparação de len sendo menor que size), eu vou querer que a string de destino na posição onde ela parou receba a interação menos o interador. Estando na posição de byte nulo do dest, vou para a próxima posição para fazer a validação novamente, só que agora o len é o i + 1. Isso será validado como false quando ele achar ou o size da atribuição ou, simplesmente, chegar no byte nulo dessa string, o primeiro que der, é o que parará o loop. Por exemplo, se eu der um tamanho muito grande para a string, tipo tamanho 100, sendo que a string tem tamanho 7, o loop parará por conta dessa validação (linha 25).
+
+Na linha 30 - 32: se, na última posição, i for menor que size, eu coloco um byte nulo. Se isso deu certo, é retornado i (que é o interador do tamanho do dest + o ft_strlen da origem (src).  Eu preciso retornar o ft_strlen do destino + o ft_strlen da origem, é isso que a função espera.
+
+STRLCPY
+
+Esta função copia uma string da origem (src) para o destino (dst), uma string de tamanho (size) - 1 e coloca um byte nulo no final.
+
+Na linha 17 - 29: se a string não existir, é retornado 0. Se existir, entra no while e faço a interação e vou atribuindo um por um ali dentro e o último byte é declarado como nulo.
+
+Na linha 31 - 35: é retornado o tamanho da string com o auxílio da função ft_strlen;
+
+STRLEN
+
+Esta função retorna o tamanho de uma string.
+
+Na linha 17 - 24: enquanto o char for true, eu somando um interador e, no final, eu retorno esse interador.
+
+STRMAPI
+
+Nesta função é aplicada uma função f (para mapear toda minha string) para cada caractere dessa string e eu vou retornar uma nova string resultando das aplicações dessa função f. Vou criar uma string usando o malloc, vou aplicar esse f e vou aplicar o resultado de cada interação em cada caractere para dentro dessa nova string que eu aloquei na memória.
+
+Na linha 17 - 25: faço a alocação de memória e libero a string. Se a alocação der errado, é retornado nulo.
+
+Na linha 26 - 32: enquanto passo pela string s na posição i e não for byte nulo, vou aplicar a função f na posição interada para o char s e a resposta dessa aplicação para dentro da string de resposta e vou continuar interando. Capturo tudo e no final coloco um byte nulo ('\0').
+
+STRNCMP
+
+Esta função compara duas strings, o local da string não é levado em conta. n é o tamanho da comparação em bytes.
+
+Na linha 24 - 30: se as strings que eu estou comparando forem diferentes, na tabela ASCII, se a primeira for um número decimal maior do que a segunda, é retornado um valor positivo. Se a segunda for maior do que a primeira, na tabela ASCII, retorna um valor negativo. Se eu tenho essas duas possibilidades, tem que ser maior ou menor. Se uma for diferente da outra, é retornado a diferença entre as duas. E, se as duas forem iguais até o final, é retornado 0.
+
+STRNSTR
+
+Esta função localiza a primeira ocorrência de uma substring de uma string maior.
+
+Na linha 17 - 21: declaro little_size que, simplesmente, é o tamanho da minha string little.
+
+Na linha 22 - 23: verifico se ele foi alocado corretamente e, se não existir o little, é retornado o big.
+
+Na linha 24 - 30: enquanto eu tiver o valor de big e minha interação for menor do que o tamanho, eu vou fazer a comparação entre uma string e outra e, enquanto essa comparação for 0, ou seja, se for igual, eu vou retornar a posição inicial da string big. E, se não for igual até aqui, eu vou continuar interando na string até achar e, se não achar, o loop acaba e retorna nulo.
+
+STRRCHR
+
+Esta função procura o final de uma string s, então retorna a primeira ocorrência do caractere c 
+
+Na linha 22: enquanto s_end é diferente de byte nulo, vou interando até o achar e quando achar, o loop para.
+
+Na linha 24 - 28: enquanto o final da string é diferente de s, se o final da string é o caractere c, me retorna qual é a sua posição. Se estou procurando o byte nulo, é retornado o byte nulo, se não for, é decrementado um valor para retornar uma posição na string. 
+
+Na linha 30 - 32: se eu não achei e o último for igual ao caractere c, é retornado no último que seria a primeira posição.
+
+STRTRIM
+
+Esta função aloca espaço em memória e retorna uma cópia de s1 com um caractere removido do começo e do final da string. s1 é a string e o set é o caractere que eu quero limpar.
+
+Na linha 21 - 26: é utilizada a função ft_strchr que vai retornar o ponteiro da ocorrência, onde ele encontrou o caractere, ele simplesmente vai passar o caractere para dentro e vai ignorá-lo e vou continuar até o fim da string, o final é o limite do i. Se eu chegar no i ou achar caractere no final, eu o ignoro e volto para o começo da string. É retornado string sem o início e o final da string, que é o que queríamos limpar.
+
+SUBSTR
+
+Esta função aloca com malloc e retorna uma string da string s, a substring começa na posição index, posição início, e ela chega no máximo até len. O parâmetro s é a string original, start é a posição inicial e o len é o tamanho da subtring.
+
+Na linha 22 - 30: se a string não existir, é retornado nulo. Eu utilizo o malloc para gerar essa substring, se a alocação der errado, é retornado NULL. Se o malloc der certo, eu vou pegar a posição inicial da string (s_start), s_len é atribuído o tamanho da string e sub_iter é um interador baseado no ponteiro de substring e eu vou somar a minha string mais a posição inicial.
+
+Na linha 31 - 34: enquanto o índice menos a posição inicial for menor do que o tamanho da string e, enquanto isso acontecer, eu vou pegar o len e decrementar . Isso serve para garantir que não vou interar mais do que o limite da string. Vou pegar o meu interador que está pegando o valor atribuído por s e quero que ele vá atribuindo vários valores, e no final, eu coloco um byte nulo no meu interador. É retornada a posição inicial do meu sub.
+
+TOLOWER
+
+Esta função pega um caractere maiúsculo e converte em minúsculo.
+
+Na linha 17 - 19: ele pega o caractere que é maíusculo e vai somar com 32, que é a diferença de um caractere maíusculo na tabela ASCII de um caractere minúsculo equivalente dele. Por exemplo, o A tem valor 65 + 32 fica 97 que é o equivalente ao a.
+
+TOUPPER
+
+Esta função pega um caractere minúsculo e converte em maíusculo.
+
+Na linha 17 - 19: ele pega o caractere que é minúsculo e vai subtrair com 32, que é a diferença de um caractere minúsculo na tabela ASCII de um caractere maiscúlo equivalente dele. Por exemplo, o a tem o valor 97 - 32 fica 65 que é o equivalente ao A.
